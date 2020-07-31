@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-
+{% load static %}
 {% block content %}
 <div dir="rtl">
     <!-- Search -->
@@ -82,20 +82,23 @@
                                 <div >
                                   {% if doctor.image %}
                                         <img  src="{{doctor.image.url }}" alt="" width="100" height="100">
+                                  {% else %}
+                                        <img  src="{% static 'static_file/img/default.png' %}" alt="" width="100" height="100">
                                   {% endif %}
+
                                 </div>
                                 <div class="jobs_conetent">
-                                    <a href=""><h5>دكتور </h5></a>
-                                    <h6>{{ doctor.name }}</h6>
+                                    <a href=""><h5>دكتور {{ doctor.name }}</h5></a>
+                                    <h6>{{ doctor.description }}</h6>
 
                                     <div class="links_locat">
                                         <div class="location">
-                                            <p> <i class="fas fa-briefcase-medical"></i> دكتور <span style="color: blue;">{{ doctor.name }}</span> متخصص في <span style="color: blue;">Specialist_doctor</span></p>
-                                            <p> <i class="fa fa-map-marker"></i>address : address_detail</p>
+                                            <p> <i class="fas fa-briefcase-medical"></i> دكتور <span style="color: blue;"><a href="{% url 'doctor-detail' doctor.slug %}">{{ doctor.name }}</a></span> متخصص في <span style="color: blue;">{{ doctor.Specialist_doctor }}</span></p>
+                                            <p> <i class="fa fa-map-marker"></i>{{ doctor.address }} : {{ doctor.address_detail }}</p>
                                             <p> <i class="fa fa-map-marker"></i> الكشف : <span style="color: blue;">{{ doctor.price }}</span> جنية</p>
-                                            <p> <i class="fa fa-clock-o"></i> مدة الانتظار : <span style="color: blue;">Waiting_time</span> ساعه</p>
-                                            <p> <i class="fa fa-clock-o"></i> عدد ساعات العمل : <span style="color: blue;">working_hours</span> ساعه</p>
-                                            <p> <i class="fa fa-clock-o"></i>سعر المكالمه العادية  :<span style="color: blue;"> number_phone </span>  </p>
+                                            <p> <i class="fa fa-clock-o"></i> مدة الانتظار : <span style="color: blue;">{{ doctor.Waiting_time }}</span> ساعه</p>
+                                            <p> <i class="fa fa-clock-o"></i> عدد ساعات العمل : <span style="color: blue;">{{ doctor.working_hours }}</span> ساعه</p>
+                                            <p> <i class="fa fa-clock-o"></i>سعر المكالمه العادية  :<span style="color: blue;"> {{ doctor.phone }} </span>  </p>
 
 
                                         </div>
