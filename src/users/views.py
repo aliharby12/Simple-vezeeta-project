@@ -6,7 +6,7 @@ from .forms import (UsercreationForm, NewCommentForm,
                     ReservationForm
                     )
 from django.contrib import messages
-
+from django.contrib.auth.decorators import login_required
 
 def doctors(request):
     """create a view to list all doctors"""
@@ -58,12 +58,12 @@ def register(request):
             form.save()
             username = form.cleaned_data.get('username')
             messages.success(request, f'{username} لقد تم تسجيل الحساب بنجاح يا  !')
-            return redirect('doctors')
+            return redirect('login')
     form = UsercreationForm()
     context = {'form':form}
     return render(request, 'users/register.html', context)
 
-
+@login_required(login_url = 'login')
 def profile(request):
     """create a view to edit my profile data"""
     user_form = UpdateUserForm(instance=request.user)
