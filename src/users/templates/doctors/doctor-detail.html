@@ -87,7 +87,7 @@
 
                       </div>
                         <div class="jobs_conetent">
-                            <a href="#" ><h4>{{ doctor.name }}</h4></a>
+                            <a href="#" ><h4>{{ doctor.user.first_name }} {{ doctor.user.last_name }}</h4></a>
                             <div class="links_locat d-flex align-items-center">
                                 <div class="location">
                                     <p> <i class="fa fa-map-marker"></i>{{doctor.address}}</p>
@@ -126,15 +126,7 @@
                         </ul>
                     </div>
                 </div>
-                <div class="single_wrap">
-                    <h4>صور العيادة :</h4>
-                            <img class="image_clinic" src="img/candiateds/2.png" alt="" >
-                            <img class="image_clinic" src="img/candiateds/2.png" alt="" >
-                            <img class="image_clinic" src="img/candiateds/2.png" alt="" >
 
-
-
-                </div>
             </div>
 
     <!-- comments -->
@@ -224,7 +216,7 @@
                         <li> الكشف : <span style="color: blue;">{{ doctor.price }} جنيه مصري</span></li>
                         <li> رقم الهاتف  : <span style="color: blue;">{{ doctor.phone }}</span></li>
                         <li>عدد ساعات العمل : <span style="color: blue;">{{ doctor.working_hours }} ساعات</span></li>
-                        <li>تاريخ ووقت الانضمام : <span style="color: blue;">{{ doctor.joined_at }}</span></li>
+                        <li>تاريخ ووقت الانضمام : <span style="color: blue;">{{ doctor.joined_at|date:'d - m - Y' }}</span></li>
                     </ul>
 
                 </div>

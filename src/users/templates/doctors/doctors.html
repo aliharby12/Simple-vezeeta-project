@@ -93,7 +93,7 @@
 
                                 </div>
                                 <div class="jobs_conetent">
-                                    <a href=""><h5>دكتور {{ doctor.user.username }}</h5></a>
+                                    <a href="{% url 'doctor-detail' slug=doctor.slug %}"><h5>دكتور {{ doctor.user.first_name }} {{ doctor.user.last_name }}</h5></a>
                                     <h6>{{ doctor.description }}</h6>
 
                                     <div class="links_locat">

@@ -1,7 +1,9 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.http import Http404
 from .models import Profile
-from .forms import UsercreationForm
+from .forms import UsercreationForm, UpdateUserForm, UpdateProfileForm
+from django.contrib import messages
+
 
 def doctors(request):
     """create a view to list all doctors"""
@@ -26,3 +28,21 @@ def register(request):
     form = UsercreationForm()
     context = {'form':form}
     return render(request, 'users/register.html', context)
+
+
+def profile(request):
+    """create a view to edit my profile data"""
+    user_form = UpdateUserForm(instance=request.user)
+    profile_form = UpdateProfileForm(instance=request.user.profile)
+
+    if request.method == 'POST':
+        user_form = UpdateUserForm(request.POST, instance=request.user)
+        profile_form = UpdateProfileForm(request.POST, request.FILES, instance=request.user.profile)
+
+        if user_form.is_valid and profile_form.is_valid:
+            user_form.save()
+            profile_form.save()
+            return redirect('doctors')
+
+    context = {'user_form':user_form, 'profile_form':profile_form}
+    return render(request, 'users/profile.html', context)
