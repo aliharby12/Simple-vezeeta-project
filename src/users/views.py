@@ -1,20 +1,38 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.http import Http404
-from .models import Profile
-from .forms import UsercreationForm, UpdateUserForm, UpdateProfileForm
+from .models import Profile, Comment
+from .forms import UsercreationForm, NewCommentForm, UpdateUserForm, UpdateProfileForm
 from django.contrib import messages
 
 
 def doctors(request):
     """create a view to list all doctors"""
     doctors = Profile.objects.all()
-    context = {'doctors':doctors}
+    context = {'doctors':doctors, 'myFilter':myFilter}
     return render(request, 'doctors/doctors.html', context)
 
 def doctor_detail(request, slug):
     """create view to render doctor detail"""
     doctor = get_object_or_404(Profile, slug=slug)
-    return render(request, 'doctors/doctor-detail.html', {'doctor':doctor})
+    comments = doctor.comments.filter(active=True)
+    comment_numbers = comments.count()
+    comment_form = NewCommentForm()
+
+    # validate the comment form
+    if request.method == 'POST':
+        comment_form = NewCommentForm(request.POST)
+        if comment_form.is_valid():
+            new_comment = comment_form.save(commit=False)
+            new_comment.doctor = doctor
+            new_comment.save()
+            comment_form = NewCommentForm()
+    else:
+        comment_form = NewCommentForm()
+        
+    context = {'doctor':doctor, 'comments':comments,
+               'comment_numbers':comment_numbers,
+               'comment_form':comment_form}
+    return render(request, 'doctors/doctor-detail.html', context)
 
 def register(request):
     """create a register method"""

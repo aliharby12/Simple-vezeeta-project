@@ -2,7 +2,7 @@ from django import forms
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib import messages
-from .models import Profile
+from .models import Profile, Comment
 
 
 class UsercreationForm(UserCreationForm):
@@ -36,3 +36,10 @@ class UpdateProfileForm(forms.ModelForm):
                   'address_detail', 'phone', 'working_hours',
                   'Waiting_time', 'facebook', 'twitter',
                   'price', 'image', 'Specialist_doctor')
+
+
+class NewCommentForm(forms.ModelForm):
+    """create new form to insert new comment"""
+    class Meta:
+        model = Comment
+        fields = ('name', 'email', 'body')

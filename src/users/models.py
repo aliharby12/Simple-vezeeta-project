@@ -67,3 +67,21 @@ def create_profile(sender, **kwargs):
         Profile.objects.create(user=kwargs['instance'])
 
 post_save.connect(create_profile, sender=User)
+
+
+#comments system
+class Comment(models.Model):
+    """create a table to save comments"""
+    name = models.CharField(_('اسم صاحب التعليق'), max_length=255)
+    email = models.EmailField(_('البريد الالكتروني'))
+    body = models.TextField(_('محتوى التعليق'))
+    comment_date = models.DateTimeField(auto_now_add=True)
+    active = models.BooleanField(default=False)
+    user = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name='comments')
+
+    class Meta:
+        verbose_name = ('التعليق')
+        verbose_name_plural = ('التعليقات')
+
+    def __str__(self):
+        return ' علق {} على ملف {}'.format(self.name, self.user)
