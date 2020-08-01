@@ -29,23 +29,23 @@ class Profile(models.Model):
         ('امراض دم', 'امراض دم'),
     }
 
-    user = models.OneToOneField(User, verbose_name=_('اسم المستخدم'), on_delete=models.CASCADE)
-    name = models.CharField(_('الاسم'), max_length=255, null=True, blank=True)
-    description = models.CharField(_('الوصف'), max_length=255, null=True, blank=True)
-    address = models.CharField(_('المحافظه'), max_length=255, null=True, blank=True)
-    address_detail = models.CharField(_('العنوان بالتفصيل'), max_length=255, null=True, blank=True)
-    phone = models.CharField(_(' رقم الهاتف'), max_length=255, null=True, blank=True)
-    working_hours = models.IntegerField(_('ساعات العمل'), default=1)
-    Waiting_time = models.IntegerField(_('مدة الانتظار'), default=1)
-    facebook = models.CharField(max_length=255, null=True, blank=True)
-    twitter = models.CharField(max_length=255, null=True, blank=True)
-    google = models.CharField(max_length=255, null=True, blank=True)
-    gender = models.CharField(max_length=255, choices=TYPE_OF_PERSON, null=True, blank=True)
-    price = models.IntegerField(_('سعر الكشف'), null=True, blank=True)
-    image = models.ImageField(_('الصوره الشخصية'), upload_to='profile', null=True, blank=True)
-    slug = models.SlugField(_('slug'), blank=True, null=True)
+    user              = models.OneToOneField(User, verbose_name=_('اسم المستخدم'), on_delete=models.CASCADE)
+    name              = models.CharField(_('الاسم'), max_length=255, null=True, blank=True)
+    description       = models.CharField(_('الوصف'), max_length=255, null=True, blank=True)
+    address           = models.CharField(_('المحافظه'), max_length=255, null=True, blank=True)
+    address_detail    = models.CharField(_('العنوان بالتفصيل'), max_length=255, null=True, blank=True)
+    phone             = models.CharField(_(' رقم الهاتف'), max_length=255, null=True, blank=True)
+    working_hours     = models.IntegerField(_('ساعات العمل'), default=1)
+    Waiting_time      = models.IntegerField(_('مدة الانتظار'), default=1)
+    facebook          = models.CharField(max_length=255, null=True, blank=True)
+    twitter           = models.CharField(max_length=255, null=True, blank=True)
+    google            = models.CharField(max_length=255, null=True, blank=True)
+    gender            = models.CharField(max_length=255, choices=TYPE_OF_PERSON, null=True, blank=True)
+    price             = models.IntegerField(_('سعر الكشف'), null=True, blank=True)
+    image             = models.ImageField(_('الصوره الشخصية'), upload_to='profile', null=True, blank=True)
+    slug              = models.SlugField(_('slug'), blank=True, null=True)
     Specialist_doctor = models.CharField(_('التخصص'), choices=DOCTOR_IN, max_length=255, default='باطنه')
-    joined_at = models.DateTimeField(_('تاريخ الانضمام'), auto_now_add=True)
+    joined_at         = models.DateTimeField(_('تاريخ الانضمام'), auto_now_add=True)
 
     def save(self, *args, **kwargs):
         """paypass the save function to save the username as slug"""
@@ -72,12 +72,12 @@ post_save.connect(create_profile, sender=User)
 #comments system
 class Comment(models.Model):
     """create a table to save comments"""
-    name = models.CharField(_('اسم صاحب التعليق'), max_length=255)
-    email = models.EmailField(_('البريد الالكتروني'))
-    body = models.TextField(_('محتوى التعليق'))
+    name         = models.CharField(_('اسم صاحب التعليق'), max_length=255)
+    email        = models.EmailField(_('البريد الالكتروني'))
+    body         = models.TextField(_('محتوى التعليق'))
     comment_date = models.DateTimeField(auto_now_add=True)
-    active = models.BooleanField(default=False)
-    user = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name='comments')
+    active       = models.BooleanField(default=False)
+    user         = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name='comments')
 
     class Meta:
         verbose_name = ('التعليق')
@@ -85,3 +85,18 @@ class Comment(models.Model):
 
     def __str__(self):
         return ' علق {} على ملف {}'.format(self.name, self.user)
+
+
+class Reservation(models.Model):
+    """create a reservation database table"""
+    name = models.CharField(_('الاسم'), max_length=255)
+    phone = models.CharField(_('رقم الهاتف'), max_length=11)
+    age = models.IntegerField(_('السن'))
+    doctor = models.ForeignKey(Profile, on_delete=models.CASCADE)
+
+    class Meta:
+        verbose_name = ('الحجز')
+        verbose_name_plural = ('الحجوزات')
+
+    def __str__(self):
+        return self.phone

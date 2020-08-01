@@ -1,14 +1,17 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.http import Http404
 from .models import Profile, Comment
-from .forms import UsercreationForm, NewCommentForm, UpdateUserForm, UpdateProfileForm
+from .forms import (UsercreationForm, NewCommentForm,
+                    UpdateUserForm, UpdateProfileForm,
+                    ReservationForm
+                    )
 from django.contrib import messages
 
 
 def doctors(request):
     """create a view to list all doctors"""
     doctors = Profile.objects.all()
-    context = {'doctors':doctors, 'myFilter':myFilter}
+    context = {'doctors':doctors}
     return render(request, 'doctors/doctors.html', context)
 
 def doctor_detail(request, slug):
@@ -17,6 +20,7 @@ def doctor_detail(request, slug):
     comments = doctor.comments.filter(active=True)
     comment_numbers = comments.count()
     comment_form = NewCommentForm()
+    reserve_form = ReservationForm()
 
     # validate the comment form
     if request.method == 'POST':
@@ -28,10 +32,22 @@ def doctor_detail(request, slug):
             comment_form = NewCommentForm()
     else:
         comment_form = NewCommentForm()
-        
+
+    if request.method == 'POST':
+        reserve_form = ReservationForm(request.POST)
+        if reserve_form.is_valid():
+            new_reserve = reserve_form.save(commit=False)
+            new_reserve.doctor = doctor
+            new_reserve.save()
+            reserve_form = ReservationForm()
+    else:
+        reserve_form = ReservationForm()
+
+
     context = {'doctor':doctor, 'comments':comments,
                'comment_numbers':comment_numbers,
-               'comment_form':comment_form}
+               'comment_form':comment_form,
+               'reserve_form':reserve_form}
     return render(request, 'doctors/doctor-detail.html', context)
 
 def register(request):

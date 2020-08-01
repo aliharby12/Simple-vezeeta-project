@@ -2,7 +2,7 @@ from django import forms
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib import messages
-from .models import Profile, Comment
+from .models import Profile, Comment, Reservation
 
 
 class UsercreationForm(UserCreationForm):
@@ -43,3 +43,10 @@ class NewCommentForm(forms.ModelForm):
     class Meta:
         model = Comment
         fields = ('name', 'email', 'body')
+
+
+class ReservationForm(forms.ModelForm):
+    """create a from for reservation"""
+    class Meta:
+        model = Reservation
+        fields = ('name', 'phone', 'age')

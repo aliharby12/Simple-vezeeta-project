@@ -9,4 +9,7 @@ urlpatterns = [
     path('users/profile', views.profile, name='profile'),
     path('', views.doctors, name='doctors'),
     path('doctors/<slug:slug>/', views.doctor_detail, name='doctor-detail'),
+
+    # api urls
+    
 ]

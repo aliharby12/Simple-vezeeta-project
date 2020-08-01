@@ -160,6 +160,40 @@
 
                 </div>
             </div>
+            <hr>
+            <div class="job_sumary">
+                <div class="summery_header">
+                    <h3>حجز كشف</h3>
+                </div>
+                <div class="job_content">
+                  <form method="POST" >
+                    {% csrf_token %}
+                      <div class="row">
+                          <div class="col-md-12">
+                              <div class="input_field">
+                                  {{ reserve_form.name|as_crispy_field }}
+
+                              </div>
+                          </div>
+                          <div class="col-md-6">
+                              <div class="input_field">
+                                  {{ reserve_form.phone|as_crispy_field }}
+                              </div>
+                          </div>
+                          <div class="col-md-6">
+                              <div class="input_field">
+                                  {{ reserve_form.age|as_crispy_field }}
+                              </div>
+                          </div>
+                          <div class="col-md-12">
+                              <div class="submit_btn">
+                                  <button class="boxed-btn3 w-100" type="submit">حجز</button>
+                              </div>
+                          </div>
+                      </div>
+                  </form>
+                </div>
+            </div>
 
         </div>
     </div>
