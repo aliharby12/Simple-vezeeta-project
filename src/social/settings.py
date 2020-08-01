@@ -40,7 +40,8 @@ INSTALLED_APPS = [
 
     # new apps
     'users',
-    'bootstrap4'
+    'bootstrap4',
+    'crispy_forms'
 ]
 
 MIDDLEWARE = [
@@ -129,3 +130,7 @@ STATICFILES_DIRS = [
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
+LOGIN_REDIRECT_URL = 'doctors'
+LOGIN_URL = 'login'

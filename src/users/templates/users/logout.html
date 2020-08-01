@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% block content %}
+
+<div dir="rtl">
+<div class="container">
+    <div class="signup">
+
+    <div class="col-md-9" >
+        <form method="POST" enctype="multipart/form-data">
+          {% csrf_token %}
+            <h1>لقد تم تسجيل الخروج بنجاح .. عد قريبا وسجل دخولك من  <a href="{% url 'login' %}" class="btn btn-info m-2"><h1>هنا</h1></a></h1>
+        </form>
+    </div>
+    </div>
+</div>
+</div>
+
+
+{% endblock %}
