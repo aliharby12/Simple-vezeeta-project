@@ -29,7 +29,7 @@ def doctor_detail(request, slug):
             new_comment = comment_form.save(commit=False)
             new_comment.doctor = doctor
             new_comment.save()
-            comment_form = NewCommentForm()
+            return redirect('doctor_detail', slug=profile.slug)
     else:
         comment_form = NewCommentForm()
 

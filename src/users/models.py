@@ -77,7 +77,7 @@ class Comment(models.Model):
     body         = models.TextField(_('محتوى التعليق'))
     comment_date = models.DateTimeField(auto_now_add=True)
     active       = models.BooleanField(default=False)
-    user         = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name='comments')
+    user         = models.ForeignKey(User, on_delete=models.CASCADE, related_name='comments')
 
     class Meta:
         verbose_name = ('التعليق')
